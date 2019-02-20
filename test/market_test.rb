@@ -77,5 +77,28 @@ class MarketTest < Minitest::Test
     assert_equal expected, actual
   end
 
+  def test_sell_method
+    @market.add_vendor(@vendor_1)
+    @market.add_vendor(@vendor_2)
+    @market.add_vendor(@vendor_3)
+    actual_1 = @market.sell("Peaches", 200)
+    expected_1 = false
+    assert_equal expected_1, actual_1
+
+    actual_2 = @market.sell("Onions", 1)
+    expected_2 = false
+    assert_equal expected_2, actual_2
+
+    actual_3 = @market.sell("Banana Nice Cream", 5)
+    expected_3 = true
+    assert_equal expected_3, actual_3
+
+    assert_equal 45, @vendor_2.check_stock("Banana Nice Cream")
+
+    assert_equal true, @market.sell("Peaches", 40)
+
+    assert_equal 0, @vendor_1.check_stock("Peaches")
+  end
+
 
 end
